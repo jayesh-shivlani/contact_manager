@@ -27,7 +27,9 @@ def create_database_and_table():
                 id INT AUTO_INCREMENT PRIMARY KEY,
                 name VARCHAR(255) NOT NULL,
                 phone VARCHAR(20) NOT NULL,
-                email VARCHAR(255)
+                email VARCHAR(255),
+                is_favorite BOOLEAN DEFAULT FALSE,
+                last_modified TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
             )
             """
             cursor.execute(create_table_query)

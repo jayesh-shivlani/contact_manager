@@ -164,10 +164,14 @@ def export_contacts():
             favorite = 'Yes' if r['is_favorite'] else 'No'
             # Format last_modified as a readable datetime string
             last_mod = r['last_modified'].strftime('%d %b %Y, %I:%M %p') if r['last_modified'] else 'N/A'
+            # Keep phone numbers as text in Excel so leading zeroes are preserved
+            # and long numbers are not displayed in scientific notation.
+            phone = str(r['phone'] or '').replace('"', '""')
+            phone_for_csv = f'="{phone}"'
             writer.writerow([
                 r['id'],
                 r['name'],
-                r['phone'],
+                phone_for_csv,
                 r['email'] or '',
                 favorite,
                 last_mod

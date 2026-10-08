@@ -9,21 +9,26 @@ A Flask web application for managing contacts with a MySQL database.
 
 ## Setup
 
-1. Create a MySQL database named `contact_manager`.
-2. Install the dependencies:
+1. Start MySQL, then install the dependencies:
 
    ```bash
    pip install -r requirements.txt
    ```
 
-3. Update the MySQL connection settings in the application scripts if needed.
-4. Initialize or migrate the database:
+2. Initialize the complete database schema:
 
    ```bash
    python setup_db.py
    ```
 
-5. Start the web application:
+   If you already created the database using an older version of `setup_db.py`, run
+   the migration once before starting the application:
+
+   ```bash
+   python migrate.py
+   ```
+
+3. Start the web application:
 
    ```bash
    python app_web.py
