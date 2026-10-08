@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Manager</title>
+    <meta name="description" content="A beautiful and modern contact management application">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <div class="background-blobs">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+    </div>
+
+    <div class="container">
+        <header class="glass-panel">
+            <h1><i class="fa-solid fa-address-book"></i> Contacts <span id="countBadge" class="count-badge">0</span>
+            </h1>
+            <div class="header-actions">
+                <div class="search-wrapper">
+                    <i class="fa-solid fa-search"></i>
+                    <input type="text" id="searchInput" placeholder="Search contacts...">
+                </div>
+                <a href="/api/contacts/export" class="btn-secondary" title="Export to CSV">
+                    <i class="fa-solid fa-download"></i>
+                </a>
+                <button id="addContactBtn" class="btn-primary">
+                    <i class="fa-solid fa-plus"></i> Add Contact
+                </button>
+            </div>
+        </header>
+
+        <main class="glass-panel main-content">
+            <div class="table-responsive">
+                <table id="contactsTable">
+                    <thead>
+                        <tr>
+                            <th class="sortable" data-sort="name">
+                                Name <i class="fa-solid fa-sort sort-icon"></i>
+                            </th>
+                            <th>Phone</th>
+                            <th>Email</th>
+                            <th class="sortable" data-sort="last_modified">
+                                Last Modified <i class="fa-solid fa-sort sort-icon"></i>
+                            </th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="contactsBody">
+                        <!-- Contacts will be loaded here via JS -->
+                    </tbody>
+                </table>
+                <div id="emptyState" class="empty-state hidden">
+                    <div class="empty-icon"><i class="fa-regular fa-folder-open"></i></div>
+                    <h3>No contacts found</h3>
+                    <p>Click the 'Add Contact' button to get started.</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Add/Edit Contact Dialog -->
+    <dialog id="contactDialog" class="glass-dialog">
+        <div class="dialog-header">
+            <h2 id="dialogTitle">Add Contact</h2>
+            <button id="closeDialogBtn" class="btn-icon" aria-label="Close dialog">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+        <form id="contactForm" method="dialog">
+            <input type="hidden" id="contactId">
+            <div class="form-group">
+                <label for="name">Full Name *</label>
+                <div class="input-wrapper">
+                    <i class="fa-regular fa-user"></i>
+                    <input type="text" id="name" name="name" required placeholder="Your Name">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="phone">Phone Number * <span class="label-hint">(10 digits only)</span></label>
+                <div class="input-wrapper">
+                    <i class="fa-solid fa-phone"></i>
+                    <input type="tel" id="phone" name="phone" required placeholder="1234567890" maxlength="10"
+                        pattern="[0-9]{10}" inputmode="numeric" title="Please enter exactly 10 digits">
+                </div>
+                <span id="phoneError" class="field-error"></span>
+            </div>
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <div class="input-wrapper">
+                    <i class="fa-regular fa-envelope"></i>
+                    <input type="email" id="email" name="email" placeholder="Your Email Address">
+                </div>
+            </div>
+            <div class="dialog-actions">
+                <button type="button" id="cancelBtn" class="btn-secondary">Cancel</button>
+                <button type="submit" class="btn-primary" id="saveBtn">Save Contact</button>
+            </div>
+        </form>
+    </dialog>
+
+    <div id="toastContainer" class="toast-container"></div>
+
+    <!-- Custom Confirm Dialog -->
+    <dialog id="confirmDialog" class="glass-dialog confirm-dialog">
+        <div class="confirm-icon"><i class="fa-solid fa-triangle-exclamation"></i></div>
+        <h2 id="confirmTitle">Delete Contact?</h2>
+        <p id="confirmMessage">This action cannot be undone.</p>
+        <div class="dialog-actions">
+            <button type="button" id="confirmCancelBtn" class="btn-secondary">Cancel</button>
+            <button type="button" id="confirmOkBtn" class="btn-danger">Delete</button>
+        </div>
+    </dialog>
+
+    <script src="/static/js/main.js"></script>
+</body>
+
+</html>
